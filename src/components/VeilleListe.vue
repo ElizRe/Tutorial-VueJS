@@ -1,5 +1,9 @@
 <template>
   <div id="liste">
+<v-app id="inspire">
+
+  </v-app>
+
     <div class="filters">
       <input
         type="text"
@@ -11,6 +15,35 @@
       </select>
     </div>
     <div class="subjects">
+      <v-layout row>
+        <v-flex xs12 sm6 offset-sm3>
+          <v-card>
+            <v-toolbar color="light-blue" dark>
+             <v-form v-model="valid">
+              <v-text-field label="Rechercher" v-model="name" :rules="nameRules">
+              </v-text-field>
+            </v-form>
+            <v-spacer></v-spacer>
+            <v-menu offset-y>
+              <v-btn color="cyan" dark slot="activator">Thématique</v-btn>
+              <v-list>
+                <v-list-tile v-for="item in items" :key="item.title" @click="">
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-toolbar>
+          <v-list two-line subheader>
+            <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }} <small>par {{ item.author }}</small></v-list-tile-title>
+                <v-list-tile-sub-title>{{ item.date }}</v-list-tile-sub-title>
+              </v-list-tile-content>           
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
       <ul>
         <li v-for="(subject, index) in subjectsFiltres">
           {{ subject.title }} <small>par {{ subject.author }}</small>
@@ -30,10 +63,10 @@ export default {
       searchTheme: 'all',
       themes: [],
       subjects: [
-        { title: 'Tout savoir sur VueJS', author: 'Raphaël', themes: ['VueJS', 'JS'] },
-        { title: 'Apprendre et étudier le JS', author: 'Victoria', themes: ['VueJS', 'JS'] },
-        { title: 'Angular VS ReactJS', author: 'Éric', themes: ['ReactJS', 'Angular', 'JS'] },
-        { title: 'Apprendre le CSS', author: 'Nicolas', themes: ['CSS'] }
+        { title: 'Tout savoir sur VueJS', author: 'Raphaël', themes: ['VueJS', 'JS'], date: '' },
+        { title: 'Apprendre et étudier le JS', author: 'Victoria', themes: ['VueJS', 'JS'], date: '' },
+        { title: 'Angular VS ReactJS', author: 'Éric', themes: ['ReactJS', 'Angular', 'JS'], date: '' },
+        { title: 'Apprendre le CSS', author: 'Nicolas', themes: ['CSS'], date: '' }
       ],
     }
   },
