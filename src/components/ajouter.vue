@@ -8,7 +8,7 @@
         <div class="input">
             <label for="auteurs"></label>
             <select id="auteurs">
-                <option v-for=" item in authors">
+                <option v-for=" item in auteurs">
                     {{item.firstname}}
                 </option>
             </select>
@@ -37,7 +37,7 @@
     </form>
 </template>
 <script>
-
+import authors from './authors.json';
 import themes from './themes.json';
 import Firebase from 'firebase'
 
@@ -52,19 +52,14 @@ let config = {
   
 let app = Firebase.initializeApp(config)
 let db = app.database()
-
-let authorRef = db.ref('authors');
-var starCountRef = db.ref('veille');
+let starCountRef = db.ref('veille');
 
 
 export default {
     name:'ajouter',
-    firebase: {
-       authors: authorRef
-    },
     data(){
         return{
-            auteurs:authorRef,
+            auteurs:authors,
             themes:themes,
             test:[],
             lastKey:0,
@@ -82,11 +77,11 @@ export default {
     created : function(){
         var self = this
        
-        starCountRef.on('value', function(snapshot) {
+        starCountRef.once('value', function(snapshot) {
 
      var veillesKeys = Object.keys(snapshot.val());
     self.lastKey = veillesKeys.splice(veillesKeys.length-1, veillesKeys.length)
-     console.log('exe')
+
 
 });
 
